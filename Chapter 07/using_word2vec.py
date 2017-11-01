@@ -51,7 +51,7 @@ target = [target[ix] for ix, x in enumerate(texts) if len(x.split()) > 2]
 texts = [x for x in texts if len(x.split()) > 2]
 
 # Split up data set into train/test
-train_indices = np.random.choice(len(target), round(0.8*len(target)), replace=False)
+train_indices = np.random.choice(len(target), int(round(0.8*len(target))), replace=False)
 test_indices = np.array(list(set(range(len(target))) - set(train_indices)))
 texts_train = [x for ix, x in enumerate(texts) if ix in train_indices]
 texts_test = [x for ix, x in enumerate(texts) if ix in test_indices]
