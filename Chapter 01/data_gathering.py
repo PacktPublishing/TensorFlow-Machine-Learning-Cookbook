@@ -1,5 +1,5 @@
 # Data gathering
-#----------------------------------
+# ----------------------------------
 #
 # This function gives us the ways to access
 # the various data sets we will need
@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from tensorflow.python.framework import ops
-ops.reset_default_graph()
 
+ops.reset_default_graph()
 
 # Iris Data
 from sklearn import datasets
@@ -27,22 +27,21 @@ import requests
 birthdata_url = 'https://www.umass.edu/statdata/statdata/data/lowbwt.dat'
 birth_file = requests.get(birthdata_url)
 birth_data = birth_file.text.split('\r\n')[5:]
-birth_header = [x for x in birth_data[0].split(' ') if len(x)>=1]
-birth_data = [[float(x) for x in y.split(' ') if len(x)>=1] for y in birth_data[1:] if len(y)>=1]
+birth_header = [x for x in birth_data[0].split(' ') if len(x) >= 1]
+birth_data = [[float(x) for x in y.split(' ') if len(x) >= 1] for y in birth_data[1:] if len(y) >= 1]
 print(len(birth_data))
 print(len(birth_data[0]))
-
 
 # Housing Price Data
 import requests
 
 housing_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data'
-housing_header = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+housing_header = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT',
+                  'MEDV']
 housing_file = requests.get(housing_url)
-housing_data = [[float(x) for x in y.split(' ') if len(x)>=1] for y in housing_file.text.split('\n') if len(y)>=1]
+housing_data = [[float(x) for x in y.split(' ') if len(x) >= 1] for y in housing_file.text.split('\n') if len(y) >= 1]
 print(len(housing_data))
 print(len(housing_data[0]))
-
 
 # MNIST Handwriting Data
 from tensorflow.examples.tutorials.mnist import input_data
@@ -51,8 +50,7 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 print(len(mnist.train.images))
 print(len(mnist.test.images))
 print(len(mnist.validation.images))
-print(mnist.train.labels[1,:])
-
+print(mnist.train.labels[1, :])
 
 # Ham/Spam Text Data
 import requests
@@ -66,14 +64,13 @@ z = ZipFile(io.BytesIO(r.content))
 file = z.read('SMSSpamCollection')
 # Format Data
 text_data = file.decode()
-text_data = text_data.encode('ascii',errors='ignore')
+text_data = text_data.encode('ascii', errors='ignore')
 text_data = text_data.decode().split('\n')
-text_data = [x.split('\t') for x in text_data if len(x)>=1]
+text_data = [x.split('\t') for x in text_data if len(x) >= 1]
 [text_data_target, text_data_train] = [list(x) for x in zip(*text_data)]
 print(len(text_data_train))
 print(set(text_data_target))
 print(text_data_train[1])
-
 
 # Movie Review Data
 import requests
@@ -87,7 +84,7 @@ stream_data = io.BytesIO(r.content)
 tmp = io.BytesIO()
 while True:
     s = stream_data.read(16384)
-    if not s:  
+    if not s:
         break
     tmp.write(s)
 stream_data.close()
@@ -99,16 +96,15 @@ neg = tar_file.extractfile('rt-polaritydata/rt-polarity.neg')
 # Save pos/neg reviews
 pos_data = []
 for line in pos:
-    pos_data.append(line.decode('ISO-8859-1').encode('ascii',errors='ignore').decode())
+    pos_data.append(line.decode('ISO-8859-1').encode('ascii', errors='ignore').decode())
 neg_data = []
 for line in neg:
-    neg_data.append(line.decode('ISO-8859-1').encode('ascii',errors='ignore').decode())
+    neg_data.append(line.decode('ISO-8859-1').encode('ascii', errors='ignore').decode())
 tar_file.close()
 
 print(len(pos_data))
 print(len(neg_data))
 print(neg_data[0])
-
 
 # The Works of Shakespeare Data
 import requests
@@ -123,20 +119,20 @@ shakespeare_text = shakespeare_file.decode('utf-8')
 shakespeare_text = shakespeare_text[7675:]
 print(len(shakespeare_text))
 
-
 # English-German Sentence Translation Data
 import requests
 import io
 from zipfile import ZipFile
+
 sentence_url = 'http://www.manythings.org/anki/deu-eng.zip'
 r = requests.get(sentence_url)
 z = ZipFile(io.BytesIO(r.content))
 file = z.read('deu.txt')
 # Format Data
 eng_ger_data = file.decode()
-eng_ger_data = eng_ger_data.encode('ascii',errors='ignore')
+eng_ger_data = eng_ger_data.encode('ascii', errors='ignore')
 eng_ger_data = eng_ger_data.decode().split('\n')
-eng_ger_data = [x.split('\t') for x in eng_ger_data if len(x)>=1]
+eng_ger_data = [x.split('\t') for x in eng_ger_data if len(x) >= 1]
 [english_sentence, german_sentence] = [list(x) for x in zip(*eng_ger_data)]
 print(len(english_sentence))
 print(len(german_sentence))

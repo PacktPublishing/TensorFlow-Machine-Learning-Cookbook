@@ -40,7 +40,7 @@ model_output = tf.add(tf.matmul(x_data, A), b)
 loss_l1 = tf.reduce_mean(tf.abs(y_target - model_output))
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Declare optimizers
@@ -82,7 +82,7 @@ model_output = tf.add(tf.matmul(x_data, A), b)
 loss_l2 = tf.reduce_mean(tf.square(y_target - model_output))
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Declare optimizers

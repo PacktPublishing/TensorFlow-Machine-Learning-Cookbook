@@ -2,6 +2,7 @@
 
 import tensorflow as tf
 from tensorflow.python.framework import ops
+
 ops.reset_default_graph()
 
 # Introduce tensors in tf
@@ -9,14 +10,14 @@ ops.reset_default_graph()
 # Get graph handle
 sess = tf.Session()
 
-my_tensor = tf.zeros([1,20])
+my_tensor = tf.zeros([1, 20])
 
 # Declare a variable
-my_var = tf.Variable(tf.zeros([1,20]))
+my_var = tf.Variable(tf.zeros([1, 20]))
 
 # Different kinds of variables
 row_dim = 2
-col_dim = 3 
+col_dim = 3
 
 # Zero initialized variable
 zero_var = tf.Variable(tf.zeros([row_dim, col_dim]))
@@ -42,23 +43,23 @@ const_var = tf.Variable(tf.constant([8, 6, 7, 5, 3, 0, 9]))
 const_fill_var = tf.Variable(tf.constant(-1, shape=[row_dim, col_dim]))
 
 # Sequence generation
-linear_var = tf.Variable(tf.linspace(start=0.0, stop=1.0, num=3)) # Generates [0.0, 0.5, 1.0] includes the end
+linear_var = tf.Variable(tf.linspace(start=0.0, stop=1.0, num=3))  # Generates [0.0, 0.5, 1.0] includes the end
 
-sequence_var = tf.Variable(tf.range(start=6, limit=15, delta=3)) # Generates [6, 9, 12] doesn't include the end
+sequence_var = tf.Variable(tf.range(start=6, limit=15, delta=3))  # Generates [6, 9, 12] doesn't include the end
 
 # Random Numbers
 
 # Random Normal
-#rnorm_var = tf.random_normal([row_dim, col_dim], mean=0.0, stddev=1.0)
+# rnorm_var = tf.random_normal([row_dim, col_dim], mean=0.0, stddev=1.0)
 
 # Initialize operation
-initialize_op = tf.initialize_all_variables()
+initialize_op = tf.global_variables_initializer()
 
 # Add summaries to tensorboard
-#merged = tf.merge_all_summaries()
+# merged = tf.merge_all_summaries()
 
 # Initialize graph writer:
-#writer = tf.train.SummaryWriter("/tmp/variable_logs", sess.graph_def)
+# writer = tf.train.SummaryWriter("/tmp/variable_logs", sess.graph_def)
 
 # Run initialization of variable
 sess.run(initialize_op)

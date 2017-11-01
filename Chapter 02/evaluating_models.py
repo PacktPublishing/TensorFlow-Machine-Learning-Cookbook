@@ -54,7 +54,7 @@ my_output = tf.matmul(x_data, A)
 loss = tf.reduce_mean(tf.square(my_output - y_target))
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Create Optimizer
@@ -118,11 +118,11 @@ A = tf.Variable(tf.random_normal(mean=10, shape=[1]))
 my_output = tf.add(x_data, A)
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Add classification loss (cross entropy)
-xentropy = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(my_output, y_target))
+xentropy = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=my_output, logits=y_target))
 
 # Create Optimizer
 my_opt = tf.train.GradientDescentOptimizer(0.05)

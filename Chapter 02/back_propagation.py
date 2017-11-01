@@ -1,5 +1,5 @@
 # Back Propagation
-#----------------------------------
+# ----------------------------------
 #
 # This python function shows how to implement back propagation
 # in regression and classification models.
@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from tensorflow.python.framework import ops
+
 ops.reset_default_graph()
 
 # Create graph
@@ -31,13 +32,13 @@ y_target = tf.placeholder(shape=[1], dtype=tf.float32)
 A = tf.Variable(tf.random_normal(shape=[1]))
 
 # Add operation to graph
-my_output = tf.mul(x_data, A)
+my_output = tf.multiply(x_data, A)
 
 # Add L2 loss operation to graph
 loss = tf.square(my_output - y_target)
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Create Optimizer
@@ -50,8 +51,8 @@ for i in range(100):
     rand_x = [x_vals[rand_index]]
     rand_y = [y_vals[rand_index]]
     sess.run(train_step, feed_dict={x_data: rand_x, y_target: rand_y})
-    if (i+1)%25==0:
-        print('Step #' + str(i+1) + ' A = ' + str(sess.run(A)))
+    if (i + 1) % 25 == 0:
+        print('Step #' + str(i + 1) + ' A = ' + str(sess.run(A)))
         print('Loss = ' + str(sess.run(loss, feed_dict={x_data: rand_x, y_target: rand_y})))
 
 # Classification Example
@@ -88,11 +89,11 @@ my_output_expanded = tf.expand_dims(my_output, 0)
 y_target_expanded = tf.expand_dims(y_target, 0)
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Add classification loss (cross entropy)
-xentropy = tf.nn.sigmoid_cross_entropy_with_logits(my_output_expanded, y_target_expanded)
+xentropy = tf.nn.sigmoid_cross_entropy_with_logits(labels=my_output_expanded, logits=y_target_expanded)
 
 # Create Optimizer
 my_opt = tf.train.GradientDescentOptimizer(0.05)
@@ -103,18 +104,18 @@ for i in range(1400):
     rand_index = np.random.choice(100)
     rand_x = [x_vals[rand_index]]
     rand_y = [y_vals[rand_index]]
-    
+
     sess.run(train_step, feed_dict={x_data: rand_x, y_target: rand_y})
-    if (i+1)%200==0:
-        print('Step #' + str(i+1) + ' A = ' + str(sess.run(A)))
+    if (i + 1) % 200 == 0:
+        print('Step #' + str(i + 1) + ' A = ' + str(sess.run(A)))
         print('Loss = ' + str(sess.run(xentropy, feed_dict={x_data: rand_x, y_target: rand_y})))
-        
+
 # Evaluate Predictions
 predictions = []
 for i in range(len(x_vals)):
     x_val = [x_vals[i]]
     prediction = sess.run(tf.round(tf.sigmoid(my_output)), feed_dict={x_data: x_val})
     predictions.append(prediction[0])
-    
-accuracy = sum(x==y for x,y in zip(predictions, y_vals))/100.
+
+accuracy = sum(x == y for x, y in zip(predictions, y_vals)) / 100.
 print('Ending Accuracy = ' + str(np.round(accuracy, 2)))
