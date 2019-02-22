@@ -32,7 +32,7 @@ y_vals = np.array([x[1] for x in birth_data])
 x_vals = np.array([x[2:9] for x in birth_data])
 
 # Split data into train/test = 80%/20%
-train_indices = np.random.choice(len(x_vals), round(len(x_vals)*0.8), replace=False)
+train_indices = np.random.choice(len(x_vals), int(round(len(x_vals)*0.8)), replace=False)
 test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))
 x_vals_train = x_vals[train_indices]
 x_vals_test = x_vals[test_indices]
@@ -63,10 +63,10 @@ b = tf.Variable(tf.random_normal(shape=[1,1]))
 model_output = tf.add(tf.matmul(x_data, A), b)
 
 # Declare loss function (Cross Entropy loss)
-loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(model_output, y_target))
+loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=model_output, logits=y_target))
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Declare optimizer

@@ -27,7 +27,7 @@ x_vals = np.array([x[3] for x in iris.data])
 y_vals = np.array([y[0] for y in iris.data])
 
 # Split data into train/test sets
-train_indices = np.random.choice(len(x_vals), round(len(x_vals)*0.8), replace=False)
+train_indices = np.random.choice(len(x_vals), int(round(len(x_vals)*0.8)), replace=False)
 test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))
 x_vals_train = x_vals[train_indices]
 x_vals_test = x_vals[test_indices]
@@ -53,14 +53,14 @@ model_output = tf.add(tf.matmul(x_data, A), b)
 # 1/2 margin width parameter = epsilon
 epsilon = tf.constant([0.5])
 # Margin term in loss
-loss = tf.reduce_mean(tf.maximum(0., tf.sub(tf.abs(tf.sub(model_output, y_target)), epsilon)))
+loss = tf.reduce_mean(tf.maximum(0., tf.subtract(tf.abs(tf.subtract(model_output, y_target)), epsilon)))
 
 # Declare optimizer
 my_opt = tf.train.GradientDescentOptimizer(0.075)
 train_step = my_opt.minimize(loss)
 
 # Initialize variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Training loop

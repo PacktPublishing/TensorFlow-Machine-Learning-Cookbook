@@ -51,7 +51,7 @@ target = [target[ix] for ix, x in enumerate(texts) if len(x.split()) > 2]
 texts = [x for x in texts if len(x.split()) > 2]
 
 # Split up data set into train/test
-train_indices = np.random.choice(len(target), round(0.8*len(target)), replace=False)
+train_indices = np.random.choice(len(target), int(round(0.8*len(target))), replace=False)
 test_indices = np.array(list(set(range(len(target))) - set(train_indices)))
 texts_train = [x for ix, x in enumerate(texts) if ix in train_indices]
 texts_test = [x for ix, x in enumerate(texts) if ix in test_indices]
@@ -92,7 +92,7 @@ embed_avg = tf.reduce_mean(embed, 1)
 model_output = tf.add(tf.matmul(embed_avg, A), b)
 
 # Declare loss function (Cross Entropy loss)
-loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(model_output, y_target))
+loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=model_output, logits=y_target))
 
 # Actual Prediction
 prediction = tf.round(tf.sigmoid(model_output))
@@ -104,7 +104,7 @@ my_opt = tf.train.AdagradOptimizer(0.005)
 train_step = my_opt.minimize(loss)
 
 # Intitialize Variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 # Load model embeddings

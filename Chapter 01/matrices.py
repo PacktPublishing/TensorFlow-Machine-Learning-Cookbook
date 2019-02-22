@@ -16,27 +16,35 @@ sess = tf.Session()
 
 # Identity matrix
 identity_matrix = tf.diag([1.0,1.0,1.0])
+print('identity_matrix:')
 print(sess.run(identity_matrix))
 
 # 2x3 random norm matrix
 A = tf.truncated_normal([2,3])
+print 'A:'
 print(sess.run(A))
 
 # 2x3 constant matrix
 B = tf.fill([2,3], 5.0)
+print 'B:'
 print(sess.run(B))
 
 # 3x2 random uniform matrix
 C = tf.random_uniform([3,2])
+print 'C:'
 print(sess.run(C))
+print 'Rerun C:'
 print(sess.run(C)) # Note that we are reinitializing, hence the new random variabels
 
 # Create matrix from np array
 D = tf.convert_to_tensor(np.array([[1., 2., 3.], [-3., -7., -1.], [0., 5., -2.]]))
+print 'D:'
 print(sess.run(D))
 
 # Matrix addition/subtraction
+print 'A+B:'
 print(sess.run(A+B))
+print 'A-B:'
 print(sess.run(B-B))
 
 # Matrix Multiplication
@@ -55,4 +63,5 @@ print(sess.run(tf.matrix_inverse(D)))
 print(sess.run(tf.cholesky(identity_matrix)))
 
 # Eigenvalues and Eigenvectors
+print 'self_adjoint_eig:'
 print(sess.run(tf.self_adjoint_eig(D)))

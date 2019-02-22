@@ -53,7 +53,7 @@ y_graph_input = tf.placeholder(tf.float32, [None])
 m = tf.Variable(tf.random_normal([1], dtype=tf.float32), name='Slope')
 
 # Declare model
-output = tf.mul(m, x_graph_input, name='Batch_Multiplication')
+output = tf.multiply(m, x_graph_input, name='Batch_Multiplication')
 
 # Declare loss function (L1)
 residuals = output - y_graph_input
@@ -78,7 +78,7 @@ with tf.name_scope('Loss_and_Residuals'):
 summary_op = tf.merge_all_summaries()
 
 # Initialize Variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 for i in range(generations):

@@ -161,7 +161,7 @@ loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(model_outpu
 train_step = tf.train.GradientDescentOptimizer(0.025).minimize(loss)
 prediction = tf.argmax(model_output, 1)
 
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess.run(init)
 
 loss_vec = []
